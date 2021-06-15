@@ -47,7 +47,13 @@ public class UserDaoHibernateImpl implements UserDao {
     public void saveUser(String name, String lastName, byte age) {
         session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         transaction = session.beginTransaction();
-        session.save(new User(name,lastName,age));
+        String sql = "DELETE FROM USERS WHERE ID = :id AND  LASTNAME = :lastname AND  AGE = :age";
+
+        Query query = session.createSQLQuery(sql).addEntity(User.class);
+        query.setParameter("name",name);
+        query.setParameter("lastname",lastName);
+        .setParameter("age",age);
+        query.executeUpdate();
         transaction.commit();
         session.close();
     }
