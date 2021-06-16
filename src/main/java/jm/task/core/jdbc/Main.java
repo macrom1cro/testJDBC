@@ -12,7 +12,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         UserService userService = new UserServiceImpl();
-/*        userService.createUsersTable();
+        userService.createUsersTable();
         userService.saveUser("Ivan","Ivanov", (byte) 20);
         userService.saveUser("Sam","Qwerty", (byte) 25);
         userService.saveUser("Alex","Bot", (byte) 30);
@@ -20,9 +20,10 @@ public class Main {
         List<User> userList = userService.getAllUsers();
         for (User user : userList) {
             System.out.println(user.toString());
-        }*/
+        }
         userService.cleanUsersTable();
         userService.dropUsersTable();
         System.out.println("GJ");
+        Util.shutdown();
     }
 }
