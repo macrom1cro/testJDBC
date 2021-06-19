@@ -1,6 +1,6 @@
 package jm.task.core.jdbc.util;
 
-import com.mysql.fabric.jdbc.FabricMySQLDriver;
+
 import jm.task.core.jdbc.model.User;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
@@ -24,7 +24,7 @@ public class Util {
 
     public static Connection getConnection() {
         try {
-            driver = new FabricMySQLDriver();
+            driver = new com.mysql.cj.jdbc.Driver();
             DriverManager.registerDriver(driver);
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
             System.out.println("connection OK");
