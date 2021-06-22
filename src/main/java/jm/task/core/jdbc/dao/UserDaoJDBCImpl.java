@@ -44,13 +44,23 @@ public class UserDaoJDBCImpl implements UserDao {
         String sql = "INSERT INTO USERS (NAME, LASTNAME, AGE) " +
                 "VALUES (?, ?, ?)";
 
-        try (PreparedStatement preparedStatement = Util.getConnection().prepareStatement(sql)) {
+        try (Connection connection = Util.getConnection()) {
+            connection.setAutoCommit(false);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, lastName);
             preparedStatement.setByte(3, age);
             preparedStatement.executeUpdate();
+            connection.commit();
 
         } catch (SQLException e) {
+            try {
+                if (!Util.getConnection().isClosed()) {
+                    Util.getConnection().rollback();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
             e.printStackTrace();
             System.out.println("no saveUser");
             throw new RuntimeException(e);
